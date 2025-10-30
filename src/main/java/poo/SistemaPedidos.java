@@ -2,7 +2,6 @@ package poo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -26,28 +25,31 @@ public class SistemaPedidos {
             BufferedReader bufferedReader = new BufferedReader(reader);
 
             //cabeçalho
-            bufferedReader.readLine(); //ler a primeira linha
-            String linha = bufferedReader.readLine();
-            System.out.println(linha); // linha 2 - produto 1
-            linha = bufferedReader.readLine();
-            System.out.println(linha); // linha 3 - produto 2
+            String linha = bufferedReader.readLine(); //ler a primeira linha
 
-            String colunas[] = linha.split(",");
-            System.out.println(colunas[0]);
-            System.out.println(colunas[2]);
+            while ((linha = bufferedReader.readLine()) != null) {
+                if (linha.isBlank()) continue;
+                String[] colunas = linha.split(",");
 
-            // id,nome,preco,descricao,estoque
-            String id = colunas[0];
-            String nome = colunas[1];
-            double preco = Double.parseDouble(colunas[2]);
-            String descricao = colunas[3];
-            int estoque = Integer.parseInt(colunas[4]);
+    //            String linha = bufferedReader.readLine();
+    //            System.out.println(linha); // linha 2 - produto 1
+    //            linha = bufferedReader.readLine();
+    //            System.out.println(linha); // linha 3 - produto 2
+    //
+    //            String colunas[] = linha.split(",");
+    //            System.out.println(colunas[0]);
+    //            System.out.println(colunas[2]);
 
-            Produto produto = new Produto(id, nome, preco, estoque, descricao);
+                    // id,nome,preco,descricao,estoque
+                    String id = colunas[0];
+                    String nome = colunas[1];
+                    double preco = Double.parseDouble(colunas[2]);
+                    String descricao = colunas[3];
+                    int estoque = Integer.parseInt(colunas[4]);
 
-            //adicionar produto na lista
-            produtos.add(produto);
-
+                    Produto produto = new Produto(id, nome, preco, estoque, descricao);
+                    produtos.add(produto);
+            }
         } catch (IOException e) {
 
         }
